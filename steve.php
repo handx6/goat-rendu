@@ -1,19 +1,16 @@
-<!-- header -->
 <?php
-$title = "Steve";
+include_once 'models/model.php';
+// Récupère les données en base
+$goat = getFromId('goat', 3);
+$title = $goat['first_name'] . ' ' . $goat['last_name'];
+
 $bg = "bg-red-600";
-include('partials/_header.php')
-?>
-<main class="px-20 py-20">
-	<!-- card -->
-	<?php
-	$img = "steve.png";
-	$name = "Steve Jobs";
-	$description = "Lorem ipsum dolor sit amet consectetur adipisicing elit. Necessitatibus nesciunt similique eaque blanditiis dolores recusandae mollitia odio illo numquam sit doloribus, quidem labore. Accusamus sequi voluptatibus obcaecati aperiam praesentium non.";
-	include('partials/_card.php')
-	?>
-</main>
-<!-- footer -->
-<?php
-include('partials/_footer.php')
-?>
+
+// Capture du html
+ob_start();
+
+include 'views/partials/_card.php';
+
+// stock contenu
+$content = ob_get_clean();
+require 'views/layout.php';

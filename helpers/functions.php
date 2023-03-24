@@ -30,8 +30,30 @@ function showInputValue($name)
     }
 }
 
+function showUpdateInputValue($name, $goat)
+{
+    if (isset($goat[$name])) {
+        echo $goat[$name];
+    }
+}
+
 // clean input
 function cleanInput($string)
 {
     return trim(htmlspecialchars($string));
+}
+
+// show value of select
+function showSelectValue($name, $value)
+{
+    if (!(empty($_POST[$name])) && $_POST[$name] == $value) {
+        echo "selected";
+    }
+}
+
+function showUpdateSelectValue($name, $value, $goat)
+{
+    if (!(empty($goat[$name])) && $goat[$name] == $value) {
+        echo "selected";
+    }
 }

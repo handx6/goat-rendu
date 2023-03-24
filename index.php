@@ -1,20 +1,15 @@
-<!-- header -->
 <?php
-$title = "Mark";
+include_once 'models/model.php';
+// Récupère les données en base
+$goat = getFromId('goat', 1);
+$title = $goat['first_name'] . ' ' . $goat['last_name'];
 $bg = "bg-indigo-600";
-include('partials/_header.php')
-?>
-<main class="px-20 py-20">
-	<!-- card -->
-	<p>hello</p>
-	<?php
-	$img = "mark.png";
-	$name = "Mark Zuckerberg";
-	$description = "Lorem ipsum dolor sit amet consectetur adipisicing elit. Necessitatibus nesciunt similique eaque blanditiis dolores recusandae mollitia odio illo numquam sit doloribus, quidem labore. Accusamus sequi voluptatibus obcaecati aperiam praesentium non.";
-	include('partials/_card.php')
-	?>
-</main>
-<!-- footer -->
-<?php
-include('partials/_footer.php')
-?>
+
+// Capture du html
+ob_start();
+
+include 'views/partials/_card.php';
+
+// stop la capture et stocke le contenu
+$content = ob_get_clean();
+require 'views/layout.php';

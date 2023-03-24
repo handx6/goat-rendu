@@ -22,7 +22,7 @@
             <span class="font-bold">Sexe: </span><?=$goat['sexe']?>
         </p>
         <div class="">
-            <a href="" class="btn btn-info">Modifier</a>
+            <a href="update-goat.php?id=<?=$goat['id']?>" class="btn btn-info">Modifier</a>
             <a href="delete.php?id=<?=$goat[
     'id'
 ]?>" class="btn btn-error">Supprimer</a>

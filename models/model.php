@@ -72,6 +72,33 @@ function get($table)
     return $item;
 }
 
+/**
+ * get a single item from id in parameters
+ *
+ * return array
+ */
+function getFromId($table, $id)
+{
+    global $pdo;
+    // Faire la requête
+    $sql = "SELECT * FROM $table WHERE id= :id";
+    // Prépare la requête
+    $query = $pdo->prepare($sql);
+    // Associe la valeur à un paramêtre
+    $query->bindValue(':id', $id, PDO::PARAM_INT);
+    // Execute ma requête
+    $query->execute();
+    // Stocke l'étudiant dans une variable
+    $item = $query->fetch();
+
+    // Pas de goat: redirection
+    if (!$item) {
+        $_SESSION['error'] = "Ce goat n'existe pas";
+        header('Location: list-goat.php');
+    }
+    return $item;
+}
+
 function delete($table)
 {
     global $pdo;
@@ -95,14 +122,36 @@ function add($table, $values)
 {
     global $pdo;
     $pdo = pdo();
-    debug_array($values);
+    $id = getId();
     // Faire la requête
     $sql = "INSERT INTO $table (`id`, `first_name`, `last_name`, `year_of_birth`, `nationality`, `company_name`, `description`, `url_img`, `sexe`) VALUES (NULL, '$values[first_name]', '$values[last_name]', '$values[year_of_birth]', '$values[nationality]', '$values[company_name]', '$values[description]', '$values[url_img]', '$values[sexe]');";
     // Prépare la requête
     $query = $pdo->prepare($sql);
+    $query->bindValue(':id', $id, PDO::PARAM_INT);
+
     // Execute ma requête
     $query->execute();
     $_SESSION['success'] = 'Goat ajouté avec succès';
+    header('Location: list-goat.php');
+
+}
+
+function update($table, $values)
+{
+    global $pdo;
+    $pdo = pdo();
+    $id = getId();
+    // Faire la requête
+    $sql = "UPDATE $table SET first_name='$values[first_name]', last_name='$values[last_name]', year_of_birth='$values[year_of_birth]', nationality='$values[nationality]', company_name='$values[company_name]', description='$values[description]', url_img='$values[url_img]', sexe='$values[sexe]' WHERE id=:id;";
+    // Prépare la requête
+    $query = $pdo->prepare($sql);
+
+    $query->bindValue(':id', $id, PDO::PARAM_INT);
+
+    // Execute ma requête
+    $query->execute();
+    $_SESSION['success'] = 'Goat modifié avec succès';
+
     header('Location: list-goat.php');
 
 }

@@ -72,6 +72,6 @@ if (!empty($_POST['submitted'])) {
             "url_img" => $url,
             "sexe" => $sexe,
         );
-        include 'add.php';
+        include 'update.php';
     }
 }
